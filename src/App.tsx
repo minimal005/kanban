@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Grid, Input, Text } from "@chakra-ui/react";
 import "./App.css";
 import { useState } from "react";
-import { StarIcon } from "@chakra-ui/icons";
+
 import { Column } from "./components/Column";
 import { Issue } from "./utils/types/Issue";
 import { BreadCrumbs } from "./components/BreadCrumbs";
@@ -94,7 +94,6 @@ export const App = () => {
       <Flex mb={4} align="center" gap="15px">
         <BreadCrumbs />
         <Flex align="center" gap="5px">
-          <StarIcon color="yellow.400" mr={1} width="3" />
           <Text as="span">933 stars</Text>
         </Flex>
       </Flex>
