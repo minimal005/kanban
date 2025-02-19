@@ -10,7 +10,7 @@ const issues: Issue[] = [
   {
     id: 12,
     title: "How can I create my own link",
-    date: "Fri Dec 13 2024",
+    date: "Fri Dec 13 2024 ",
     status: "open",
     author: "Lonelybhadboi",
     comments: 0,
