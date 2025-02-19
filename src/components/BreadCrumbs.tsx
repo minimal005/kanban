@@ -2,9 +2,9 @@ import { Breadcrumb } from "@chakra-ui/react";
 
 export const BreadCrumbs = () => {
   return (
-    <Breadcrumb.Root size="md">
+    <Breadcrumb.Root size="md" ml="5px">
       <Breadcrumb.List>
-        <Breadcrumb.Item textStyle="lg">
+        <Breadcrumb.Item textStyle="sm">
           <Breadcrumb.Link
             href="#"
             color="blue.500"
@@ -14,7 +14,7 @@ export const BreadCrumbs = () => {
           </Breadcrumb.Link>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
-        <Breadcrumb.Item textStyle="lg">
+        <Breadcrumb.Item textStyle="sm">
           <Breadcrumb.Link
             href="#"
             color="blue.500"

@@ -15,10 +15,13 @@ export const Column = ({
     p={4}
     bg="gray.800"
     borderRadius="md"
+    borderStyle="solid"
+    borderWidth="1px"
+    borderColor="#ffffff11"
     minH="300px"
     align="stretch"
   >
-    <Text fontWeight="bold" textAlign="center">
+    <Text fontWeight="bold" textAlign="center" color="blue.500" mb={3}>
       {title}
     </Text>
     {issues.length > 0 ? (
