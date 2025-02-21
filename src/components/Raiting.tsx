@@ -1,7 +1,17 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { BreadCrumbs } from "./BreadCrumbs";
+import { useGithubStore } from "@/app/useGithubStore";
+import { useEffect } from "react";
 
 export const Raiting = () => {
+  const { path, stars, fetchRepoDetails } = useGithubStore();
+
+  useEffect(() => {
+    if (path) {
+      fetchRepoDetails(path);
+    }
+  }, [path, fetchRepoDetails]);
+
   return (
     <Flex as="section" mb={4} align="center" gap="15px">
       <BreadCrumbs />
@@ -10,7 +20,7 @@ export const Raiting = () => {
           <Box as="span" color="#b49135">
             ★
           </Box>{" "}
-          933 stars
+          {stars} stars
         </Box>
       </Flex>
     </Flex>
