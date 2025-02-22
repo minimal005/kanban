@@ -18,7 +18,7 @@ export const useGithubStore = create<
       path: "",
       status: "idle",
       error: null,
-      stars: 0, // Додаємо поле для зірочок
+      stars: 0,
 
       fetchIssues: async (repo: string) => {
         set({ status: "loading", error: null });

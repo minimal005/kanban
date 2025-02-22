@@ -5,8 +5,6 @@ import { move } from "@dnd-kit/helpers";
 import { useGithubStore } from "../app/useGithubStore";
 import { useEffect, useState } from "react";
 
-// const repoUrl = "molyswu/hand_detection";
-
 export const TodoList = () => {
   const { issues, status, error } = useGithubStore();
   const [tasks, setTasks] = useState(issues);

@@ -46,7 +46,8 @@ export const Card: React.FC<Props> = (props) => {
         #{issue.id} {status} {format(new Date(issue.date), "MMM dd yyyy")}
       </Text>
       <Text fontSize="sm" color="gray.300">
-        <Link href={issue.author}> {issue.author}</Link> |{" "}
+        <Link href={`http://github.com/${issue.author}`}> {issue.author}</Link>{" "}
+        |{" "}
         <Text color="gray.400" as={"span"}>
           comments:
         </Text>{" "}
