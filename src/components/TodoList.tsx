@@ -14,7 +14,8 @@ export const TodoList = () => {
     inProgress: tasks.inProgress,
     closed: tasks.closed,
   });
-
+  console.log(items);
+  console.log(status);
   useEffect(() => {
     setTasks(issues);
   }, [issues]);

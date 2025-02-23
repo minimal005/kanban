@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import axios from "axios";
-import { GithubIssue, GithubStore, IssuesGrouped } from "@/utils/types/Issue";
+import { GithubStore } from "@/utils/types/GithubStore";
+import { GithubIssue } from "@/utils/types/GithubUssue";
+import { IssuesGrouped } from "@/utils/types/Issue";
 
 const GITHUB_API_URL = "https://api.github.com";
 const TOKEN = import.meta.env.VITE_GITHUB_TOKEN || ""; // Додаємо токен, якщо він є
