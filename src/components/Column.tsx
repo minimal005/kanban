@@ -71,7 +71,7 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
         color="blue.500"
         mb={3}
       >
-        {statusStyle}
+        {statusStyle === "InProgress" ? "In Progress" : statusStyle}
         {isAccordion && (
           <Box
             aria-label={isOpen ? "Collapse" : "Expand"}

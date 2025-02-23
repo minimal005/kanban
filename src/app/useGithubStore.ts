@@ -16,7 +16,7 @@ export const useGithubStore = create<
 >()(
   persist(
     (set) => ({
-      issues: { open: [], inProgress: [], closed: [] },
+      issues: { toDo: [], inProgress: [], done: [] },
       path: "",
       status: "idle",
       error: null,
@@ -31,18 +31,18 @@ export const useGithubStore = create<
           );
 
           const groupedIssues: IssuesGrouped = {
-            open: [],
+            toDo: [],
             inProgress: [],
-            closed: [],
+            done: [],
           };
 
           response.data.forEach((issue) => {
             const state =
-              issue.state === "closed"
-                ? "closed"
+              issue.state === "done"
+                ? "done"
                 : issue.assignee
                 ? "inProgress"
-                : "open";
+                : "toDo";
 
             groupedIssues[state].push({
               id: issue.id,

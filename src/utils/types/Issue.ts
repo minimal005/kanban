@@ -2,15 +2,15 @@ export interface Issue {
   id: number;
   title: string;
   date: string;
-  state: "open" | "inProgress" | "closed";
+  state: "toDo" | "inProgress" | "done";
   author: string;
   comments: number;
   assignee?: string | null;
 }
 
 export interface IssuesGrouped {
-  open: Issue[];
+  toDo: Issue[];
   inProgress: Issue[];
-  closed: Issue[];
+  done: Issue[];
   [key: string]: Issue[];
 }

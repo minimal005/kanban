@@ -1,5 +1,5 @@
 import { useGithubStore } from "@/app/useGithubStore";
-import { Box, Button, Flex, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
@@ -9,6 +9,7 @@ type Inputs = {
 
 const githubURL = "https://github.com/";
 export const SearchForm = () => {
+  const isFullWidth = useBreakpointValue({ base: true, md: false }) ?? true;
   const { fetchIssues, path } = useGithubStore();
   const {
     register,
@@ -46,14 +47,14 @@ export const SearchForm = () => {
     <Box as="section" mb={4}>
       <Flex
         as="form"
-        wrap="wrap"
+        wrap={isFullWidth ? "wrap" : "noWrap"}
         onSubmit={handleSubmit(handleClickRepo)}
         columnGap={2}
         rowGap={4}
       >
         <Flex
           bg="gray.800"
-          w="320px"
+          w="full"
           h="100%"
           alignItems="center"
           borderRadius="md"

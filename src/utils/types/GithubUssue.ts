@@ -2,7 +2,7 @@ export interface GithubIssue {
   id: number;
   title: string;
   created_at: string;
-  state: "open" | "closed";
+  state: "toDo" | "done";
   user: { login: string };
   comments: number;
   labels: { name: string }[];

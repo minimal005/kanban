@@ -30,9 +30,9 @@ export const TodoList = () => {
           const result = move(prev, event);
 
           return {
-            open: result["open"] || [],
+            toDo: result["toDo"] || [],
             inProgress: result["inProgress"] || [],
-            closed: result["closed"] || [],
+            done: result["done"] || [],
           };
         });
       }}
