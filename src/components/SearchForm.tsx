@@ -55,6 +55,7 @@ export const SearchForm = () => {
           bg="gray.800"
           w="320px"
           h="100%"
+          alignItems="center"
           borderRadius="md"
           borderStyle="solid"
           borderWidth="1px"

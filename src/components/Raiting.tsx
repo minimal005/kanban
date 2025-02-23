@@ -15,7 +15,7 @@ export const Raiting = () => {
   const formattedStars = formatStars(stars);
 
   return (
-    <Flex as="section" mb={4} align="center" gap="15px">
+    <Flex as="section" mb={10} align="center" gap="15px">
       <BreadCrumbs />
       <Flex align="center" gap="5px">
         <Box>

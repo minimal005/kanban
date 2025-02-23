@@ -1,9 +1,13 @@
 import { Issue } from "@/utils/types/Issue";
-import { Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Text, useBreakpointValue, VStack } from "@chakra-ui/react";
+import { Collapse } from "@chakra-ui/transition";
+
 import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { Card } from "./Card";
-import React from "react";
+import React, { useState } from "react";
+import { ChevronUpIcon } from "./icons/ChevronUpIcon";
+import { ChevronDownIcon } from "./icons/ChevronDownIcon";
 
 type Props = {
   id: string;
@@ -11,6 +15,7 @@ type Props = {
 };
 
 export const Column: React.FC<Props> = ({ id, issues }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const { isDropTarget, ref } = useDroppable({
     id,
     type: "column",
@@ -20,6 +25,16 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
 
   const style = isDropTarget ? { background: "#00000030" } : undefined;
   const statusStyle = id[0].toUpperCase() + id.slice(1);
+
+  const isAccordion = useBreakpointValue({ base: true, md: false });
+  // const shouldShowContent = !isAccordion || isOpen;
+
+  const handleToggle = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setIsOpen((prev) => !prev);
+  };
+
+  const minHeight = isAccordion && !isOpen ? "50px" : "150px";
 
   return (
     <VStack
@@ -32,26 +47,54 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
       borderStyle="solid"
       borderWidth="1px"
       borderColor="#ffffff11"
-      minH="300px"
+      // transition="min-height 0.8s linear"
+      minH={minHeight}
       align="stretch"
+      onClick={() => {
+        if (isAccordion) {
+          setIsOpen((prev) => !prev);
+        }
+      }}
+      cursor={isAccordion ? "pointer" : "default"}
     >
-      <Text fontWeight="bold" textAlign="center" color="blue.500" mb={3}>
+      <Flex
+        fontWeight="bold"
+        align={"center"}
+        justify={"center"}
+        color="blue.500"
+        mb={3}
+      >
         {statusStyle}
-      </Text>
-      {issues.length > 0 ? (
-        issues.map((issue, index) => (
-          <Card
-            key={issue.id}
-            id={issue.id}
-            status={id}
-            index={index}
-            issue={issue}
-            column={id}
-          />
-        ))
-      ) : (
-        <Text textAlign="center">No issues</Text>
-      )}
+        {isAccordion && (
+          <Box
+            aria-label={isOpen ? "Collapse" : "Expand"}
+            onClick={handleToggle}
+          >
+            {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          </Box>
+        )}
+      </Flex>
+      <Collapse
+        in={!isAccordion || isOpen}
+        animateOpacity
+        startingHeight={0}
+        transition={{ enter: { duration: 0.8 }, exit: { duration: 0.5 } }}
+      >
+        {issues.length > 0 ? (
+          issues.map((issue, index) => (
+            <Card
+              key={issue.id}
+              id={issue.id}
+              status={id}
+              index={index}
+              issue={issue}
+              column={id}
+            />
+          ))
+        ) : (
+          <Text textAlign="center">No issues</Text>
+        )}
+      </Collapse>
     </VStack>
   );
 };

@@ -39,7 +39,10 @@ export const TodoList = () => {
     >
       <Grid
         as="section"
-        templateColumns="repeat(3, minmax(250px, 1fr))"
+        templateColumns={{
+          sm: "1fr",
+          md: "repeat(3, minmax(250px, 1fr))",
+        }}
         gap={4}
         w="100%"
       >
