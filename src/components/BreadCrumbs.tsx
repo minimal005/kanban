@@ -3,8 +3,8 @@ import { Breadcrumb } from "@chakra-ui/react";
 
 export const BreadCrumbs = () => {
   const { path } = useGithubStore();
-  const parentPath = path.split("/")[0].toLowerCase();
-  const childPath = path.split("/")[1].toLowerCase();
+  const parentPath = path.split("/")[0]?.toLowerCase() || null;
+  const childPath = path.split("/")[1]?.toLowerCase() || null;
 
   return (
     <Breadcrumb.Root size="md" ml="5px">

@@ -56,11 +56,6 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
       borderColor="#ffffff11"
       maxH={maxHeight}
       align="stretch"
-      onClick={() => {
-        if (isAccordion) {
-          setIsOpen((prev) => !prev);
-        }
-      }}
       cursor={isAccordion ? "pointer" : "default"}
       transition="max-height 0.3s ease"
     >
@@ -70,6 +65,11 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
         justify="center"
         color="blue.500"
         mb={3}
+        onClick={() => {
+          if (isAccordion) {
+            setIsOpen((prev) => !prev);
+          }
+        }}
       >
         {statusStyle === "InProgress" ? "In Progress" : statusStyle}
         {isAccordion && (

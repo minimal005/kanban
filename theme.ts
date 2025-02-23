@@ -5,12 +5,7 @@ import {
 } from "@chakra-ui/react";
 
 const customConfig = defineConfig({
-  theme: {
-    breakpoints: {
-      phone: "320px",
-      tablet: "900px",
-    },
-  },
+  theme: {},
 });
 
 export const system = createSystem(defaultBaseConfig, customConfig);
