@@ -3,14 +3,16 @@ import { SearchForm } from "./components/SearchForm";
 import { Container } from "./components/Container";
 import { TodoList } from "./components/TodoList";
 import { useGithubStore } from "./app/useGithubStore";
+
 import "./App.css";
 
 export const App = () => {
-  const { path } = useGithubStore();
+  const { error, status } = useGithubStore();
+
   return (
     <Container>
       <SearchForm />
-      {path && <Raiting />}
+      {!error && status !== "loading" && <Raiting />}
       <TodoList />
     </Container>
   );

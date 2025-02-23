@@ -1,35 +1,55 @@
 import { useGithubStore } from "@/app/useGithubStore";
 import { Box, Button, Flex, Input } from "@chakra-ui/react";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
 type Inputs = {
   searchField: string;
 };
 
+const githubURL = "https://github.com/";
 export const SearchForm = () => {
-  const { fetchIssues } = useGithubStore();
+  const { fetchIssues, path } = useGithubStore();
   const {
     register,
     handleSubmit,
-    // watch,
+    reset,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      searchField: path ? `${githubURL}${path}` : githubURL,
+    },
+  });
+
+  useEffect(() => {
+    reset({ searchField: path ? `${githubURL}${path}` : githubURL });
+  }, [path, reset]);
 
   const handleClickRepo: SubmitHandler<Inputs> = (data) => {
-    const repo = data.searchField.replace("https://github.com/", "");
+    const searchValue = data.searchField.trim();
+
+    if (!searchValue) {
+      return;
+    }
+
+    const repo = searchValue.replace(githubURL, "");
     fetchIssues(repo);
   };
 
-  const handleError = (errors: FieldErrors<Inputs>) => {
-    console.log(errors);
+  const handleReset = () => {
+    fetchIssues("");
+    useGithubStore.setState({ path: "" });
+    reset({ searchField: githubURL });
   };
 
   return (
     <Box as="section" mb={4}>
       <Flex
         as="form"
-        onSubmit={handleSubmit(handleClickRepo, handleError)}
-        gap={2}
+        wrap="wrap"
+        onSubmit={handleSubmit(handleClickRepo)}
+        columnGap={2}
+        rowGap={4}
       >
         <Flex
           bg="gray.800"
@@ -52,16 +72,14 @@ export const SearchForm = () => {
             {...register("searchField", {
               required: "This field is required",
               validate: (value) =>
-                value.includes("https://github.com/") ||
-                "Invalid repository URL",
+                value.startsWith(githubURL) ||
+                `Enter a valid GitHub URL, e.g. https://github.com/facebook/react`,
             })}
             className="searchField"
-            placeholder="Search issues..."
-            // value={search}
-            // onChange={(e) => setSearch(e.target.value)}
           />
           <Button
-            type="reset"
+            onClick={handleReset}
+            type="button"
             w="42px"
             alignItems="center"
             display="flex"

@@ -4,29 +4,16 @@ import { DragDropProvider } from "@dnd-kit/react";
 import { move } from "@dnd-kit/helpers";
 import { useGithubStore } from "../app/useGithubStore";
 import { useEffect, useState } from "react";
+import { IssuesGrouped } from "@/utils/types/Issue";
 
 export const TodoList = () => {
   const { issues, status, error } = useGithubStore();
-  const [tasks, setTasks] = useState(issues);
 
-  const [items, setItems] = useState({
-    open: tasks.open,
-    inProgress: tasks.inProgress,
-    closed: tasks.closed,
-  });
-  console.log(items);
-  console.log(status);
+  const [items, setItems] = useState<IssuesGrouped>(issues);
+
   useEffect(() => {
-    setTasks(issues);
+    setItems(issues);
   }, [issues]);
-
-  useEffect(() => {
-    setItems({
-      open: tasks.open,
-      inProgress: tasks.inProgress,
-      closed: tasks.closed,
-    });
-  }, [tasks]);
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -39,7 +26,15 @@ export const TodoList = () => {
   return (
     <DragDropProvider
       onDragOver={(event) => {
-        setItems((items) => move(items, event));
+        setItems((prev) => {
+          const result = move(prev, event);
+
+          return {
+            open: result["open"] || [],
+            inProgress: result["inProgress"] || [],
+            closed: result["closed"] || [],
+          };
+        });
       }}
     >
       <Grid
@@ -48,8 +43,8 @@ export const TodoList = () => {
         gap={4}
         w="100%"
       >
-        {Object.entries(items).map(([column, items]) => (
-          <Column key={column} id={column} issues={items} />
+        {Object.entries(items).map(([column, issues]) => (
+          <Column key={column} id={column} issues={issues} />
         ))}
       </Grid>
     </DragDropProvider>

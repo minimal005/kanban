@@ -12,4 +12,5 @@ export interface IssuesGrouped {
   open: Issue[];
   inProgress: Issue[];
   closed: Issue[];
+  [key: string]: Issue[];
 }
