@@ -21,6 +21,7 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
   const style = isDropTarget ? { background: "#00000030" } : undefined;
   const statusStyle = id[0].toUpperCase() + id.slice(1);
 
+  console.log(issues.length);
   return (
     <VStack
       ref={ref}

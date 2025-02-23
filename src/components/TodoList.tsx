@@ -20,6 +20,14 @@ export const TodoList = () => {
     setTasks(issues);
   }, [issues]);
 
+  useEffect(() => {
+    setItems({
+      open: tasks.open,
+      inProgress: tasks.inProgress,
+      closed: tasks.closed,
+    });
+  }, [tasks]);
+
   if (status === "loading") {
     return <p>Loading...</p>;
   }
