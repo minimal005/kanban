@@ -29,6 +29,7 @@ export const Card: React.FC<Props> = (props) => {
       bg="#3f3f4694"
       p={4}
       mb={2}
+      w={"100%"}
       borderRadius="md"
       shadow="xs"
       cursor="pointer"

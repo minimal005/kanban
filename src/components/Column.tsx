@@ -26,7 +26,7 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
   const statusStyle = id[0].toUpperCase() + id.slice(1);
 
   const [isOpen, setIsOpen] = useState(false);
-  const isAccordion = useBreakpointValue({ base: true, md: false });
+  const isAccordion = useBreakpointValue({ base: true, md: false }) ?? true;
 
   useEffect(() => {
     if (isAccordion) {
@@ -47,12 +47,13 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
       style={style}
       flex="1"
       p={4}
+      w={isAccordion ? "calc(100vw - 30px)" : "full"}
+      mx="auto"
       bg="gray.800"
       borderRadius="md"
       borderStyle="solid"
       borderWidth="1px"
       borderColor="#ffffff11"
-      // transition="min-height 0.8s linear"
       maxH={maxHeight}
       align="stretch"
       onClick={() => {
@@ -61,11 +62,12 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
         }
       }}
       cursor={isAccordion ? "pointer" : "default"}
+      transition="max-height 0.3s ease"
     >
       <Flex
         fontWeight="bold"
-        align={"center"}
-        justify={"center"}
+        align="center"
+        justify="center"
         color="blue.500"
         mb={3}
       >
@@ -83,7 +85,8 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
         in={!isAccordion || isOpen}
         animateOpacity
         startingHeight={0}
-        transition={{ enter: { duration: 0.8 }, exit: { duration: 0.5 } }}
+        unmountOnExit
+        transition={{ enter: { duration: 0.5 }, exit: { duration: 0.5 } }}
       >
         {issues.length > 0 ? (
           issues.map((issue, index) => (

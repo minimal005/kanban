@@ -43,6 +43,7 @@ export const TodoList = () => {
           sm: "1fr",
           md: "repeat(3, minmax(250px, 1fr))",
         }}
+        justifyContent={"center"}
         gap={4}
         w="100%"
       >
