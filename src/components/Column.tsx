@@ -5,7 +5,7 @@ import { Collapse } from "@chakra-ui/transition";
 import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { Card } from "./Card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronUpIcon } from "./icons/ChevronUpIcon";
 import { ChevronDownIcon } from "./icons/ChevronDownIcon";
 
@@ -15,7 +15,6 @@ type Props = {
 };
 
 export const Column: React.FC<Props> = ({ id, issues }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const { isDropTarget, ref } = useDroppable({
     id,
     type: "column",
@@ -26,15 +25,21 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
   const style = isDropTarget ? { background: "#00000030" } : undefined;
   const statusStyle = id[0].toUpperCase() + id.slice(1);
 
+  const [isOpen, setIsOpen] = useState(false);
   const isAccordion = useBreakpointValue({ base: true, md: false });
-  // const shouldShowContent = !isAccordion || isOpen;
+
+  useEffect(() => {
+    if (isAccordion) {
+      setIsOpen(false);
+    }
+  }, [issues, isAccordion]);
 
   const handleToggle = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setIsOpen((prev) => !prev);
   };
 
-  const minHeight = isAccordion && !isOpen ? "50px" : "150px";
+  const maxHeight = isAccordion && !isOpen ? "60px" : "100%";
 
   return (
     <VStack
@@ -48,7 +53,7 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
       borderWidth="1px"
       borderColor="#ffffff11"
       // transition="min-height 0.8s linear"
-      minH={minHeight}
+      maxH={maxHeight}
       align="stretch"
       onClick={() => {
         if (isAccordion) {
