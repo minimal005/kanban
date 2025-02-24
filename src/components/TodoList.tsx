@@ -1,40 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
-import { Grid } from "@chakra-ui/react";
+import { Grid, Text } from "@chakra-ui/react";
 import { Column } from "./Column";
 import { move } from "@dnd-kit/helpers";
-import { useGithubStore } from "../app/useGithubStore";
-import { IssuesGrouped } from "@/utils/types/Issue";
+import { IssuesGrouped } from "@/types/Issue";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { InitialState, moveIssue } from "@/features/issuesSlice";
+import { Card } from "./Card";
 
 export const TodoList = () => {
-  const { issues, status, error } = useGithubStore();
+  const issues = useAppSelector((state: { issues: InitialState }) => ({
+    open: state.issues.open,
+    inProgress: state.issues.inProgress,
+    done: state.issues.done,
+  }));
+  const dispatch = useAppDispatch();
 
-  const [items, setItems] = useState<IssuesGrouped>(issues);
+  const memoizedIssues = useMemo(
+    () => ({
+      open: issues.open,
+      inProgress: issues.inProgress,
+      done: issues.done,
+    }),
+    [issues.open, issues.inProgress, issues.done]
+  );
+
+  const [items, setItems] = useState<IssuesGrouped>(memoizedIssues);
 
   useEffect(() => {
-    setItems(issues);
-  }, [issues]);
+    setItems(memoizedIssues);
+  }, [memoizedIssues]);
 
   if (status === "loading") {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
     <DragDropProvider
       onDragOver={(event) => {
-        setItems((prev) => {
-          const result = move(prev, event);
+        const { operation } = event;
+        if (!operation?.source || !operation?.target) {
+          return;
+        }
 
-          return {
-            toDo: result["toDo"] || [],
-            inProgress: result["inProgress"] || [],
-            done: result["done"] || [],
-          };
-        });
+        const issueId = Number(operation.source.id);
+        const from = operation.source.data.current?.column || null;
+        const to = operation.target.data.current?.column || null;
+
+        if (from && to && from !== to) {
+          dispatch(moveIssue({ issueId, from, to }));
+        }
+        setItems((items) => move(items, event));
       }}
     >
       <Grid
@@ -48,7 +64,21 @@ export const TodoList = () => {
         w="100%"
       >
         {Object.entries(items).map(([column, issues]) => (
-          <Column key={column} id={column} issues={issues} />
+          <Column key={column} id={column}>
+            {issues.length > 0 ? (
+              issues.map((issue, index) => (
+                <Card
+                  key={issue.id}
+                  id={issue.id}
+                  index={index}
+                  issue={issue}
+                  column={column}
+                />
+              ))
+            ) : (
+              <Text textAlign="center">No issues</Text>
+            )}
+          </Column>
         ))}
       </Grid>
     </DragDropProvider>

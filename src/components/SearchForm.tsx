@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useGithubStore } from "@/app/useGithubStore";
 import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
+import { useAppDispatch } from "@/app/hooks";
+import { fetchIssues } from "@/features/issuesSlice";
 
 type Inputs = {
   searchField: string;
@@ -10,8 +12,10 @@ type Inputs = {
 
 const githubURL = "https://github.com/";
 export const SearchForm = () => {
+  const dispatch = useAppDispatch();
+  const [repo, setRepo] = useState("");
+
   const isFullWidth = useBreakpointValue({ base: true, md: false }) ?? true;
-  const { fetchIssues, path } = useGithubStore();
   const {
     register,
     handleSubmit,
@@ -19,27 +23,18 @@ export const SearchForm = () => {
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      searchField: path ? `${githubURL}${path}` : githubURL,
+      searchField: repo ? `${githubURL}${repo}` : githubURL,
     },
   });
 
-  useEffect(() => {
-    reset({ searchField: path ? `${githubURL}${path}` : githubURL });
-  }, [path, reset]);
-
-  const handleClickRepo: SubmitHandler<Inputs> = (data) => {
-    const searchValue = data.searchField.trim();
-
-    if (!searchValue) {
-      return;
+  const handleClickRepo: SubmitHandler<Inputs> = () => {
+    if (repo) {
+      dispatch(fetchIssues(repo.replace("https://github.com/", "")));
     }
-
-    const repo = searchValue.replace(githubURL, "");
-    fetchIssues(repo);
   };
 
   const handleReset = () => {
-    fetchIssues("");
+    // fetchIssues('');
     useGithubStore.setState({ path: "" });
     reset({ searchField: githubURL });
   };
@@ -78,6 +73,7 @@ export const SearchForm = () => {
                 value.startsWith(githubURL) ||
                 `Enter a valid GitHub URL, e.g. https://github.com/facebook/react`,
             })}
+            onChange={(e) => setRepo(e.target.value)}
             className="searchField"
           />
           <Button

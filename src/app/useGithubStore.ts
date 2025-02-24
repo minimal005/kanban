@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import axios from "axios";
-import { GithubStore } from "@/utils/types/GithubStore";
-import { GithubIssue } from "@/utils/types/GithubUssue";
-import { IssuesGrouped } from "@/utils/types/Issue";
+import { GithubStore } from "@/types/GithubStore";
+import { GithubIssue } from "@/types/GithubUssue";
+import { IssuesGrouped } from "@/types/Issue";
 
 const GITHUB_API_URL = "https://api.github.com";
 const TOKEN = import.meta.env.VITE_GITHUB_TOKEN || "";
@@ -26,7 +26,7 @@ export const useGithubStore = create<
         set({ status: "loading", error: null });
         try {
           const response = await axios.get<GithubIssue[]>(
-            `${GITHUB_API_URL}/repos/${repo}/issues?state=all&per_page=100`,
+            `${GITHUB_API_URL}/repos/${repo}/issues?state=all`,
             TOKEN ? { headers: { Authorization: `Bearer ${TOKEN}` } } : {}
           );
 

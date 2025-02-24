@@ -1,18 +1,17 @@
 import React from "react";
 import { Box, Link, Text } from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/react/sortable";
-import { format } from "date-fns";
-import { Issue } from "@/utils/types/Issue";
+// import { format } from "date-fns";
+import { Issue } from "@/types/Issue";
 
 type Props = {
   id: number;
-  status: string;
   index: number;
   issue: Issue;
   column: string;
 };
 export const Card: React.FC<Props> = (props) => {
-  const { id, status, index, issue, column } = props;
+  const { id, index, issue, column } = props;
   const { ref, isDragging } = useSortable({
     id,
     index,
@@ -45,7 +44,7 @@ export const Card: React.FC<Props> = (props) => {
         {issue.title}
       </Text>
       <Text fontSize="sm" color="gray.300">
-        #{issue.id} {status} {format(new Date(issue.date), "MMM dd yyyy")}
+        {/* #{issue.id} {column} {format(new Date(issue.date), "MMM dd yyyy")} */}
       </Text>
       <Text fontSize="sm" color="gray.300">
         <Link

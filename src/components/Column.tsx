@@ -1,17 +1,15 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/react";
-import { Flex, Text, VStack } from "@chakra-ui/react";
+import { Flex, VStack } from "@chakra-ui/react";
 
 import { CollisionPriority } from "@dnd-kit/abstract";
-import { Card } from "./Card";
-import { Issue } from "@/utils/types/Issue";
 
 type Props = {
+  children: React.ReactNode;
   id: string;
-  issues: Issue[];
 };
 
-export const Column: React.FC<Props> = ({ id, issues }) => {
+export const Column: React.FC<Props> = ({ children, id }) => {
   const { isDropTarget, ref } = useDroppable({
     id,
     type: "column",
@@ -49,20 +47,7 @@ export const Column: React.FC<Props> = ({ id, issues }) => {
         {statusStyle === "InProgress" ? "In Progress" : statusStyle}
       </Flex>
 
-      {issues.length > 0 ? (
-        issues.map((issue, index) => (
-          <Card
-            key={issue.id}
-            id={issue.id}
-            status={id}
-            index={index}
-            issue={issue}
-            column={id}
-          />
-        ))
-      ) : (
-        <Text textAlign="center">No issues</Text>
-      )}
+      {children}
     </VStack>
   );
 };
