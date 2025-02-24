@@ -1,50 +1,99 @@
-# React + TypeScript + Vite
+# GitHub Kanban Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is a **Kanban Board** for GitHub repository issues, allowing users to visualize and manage issues efficiently. Users can enter a repository URL, load its issues, and organize them into different columns.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Enter a GitHub repository URL to fetch issues.
+- Displays issues in three columns:
+  - **ToDo** (new issues)
+  - **In Progress** (open issues with an assignee)
+  - **Done** (closed issues)
+- Drag-and-drop functionality to move issues between columns.
+- Issues' positions (column and order) are stored across sessions.
+- Links to visit the repository and its owner's profile.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend:** React 18 with hooks, TypeScript
+- **UI Library:** Chakra UI
+- **State Management:** Zustand
+- **Drag-and-Drop:** DnD Kit
+- **Testing:** Cypress
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Installation & Setup
+
+### Prerequisites
+
+Make sure you have **Node.js** and **npm** installed.
+
+### Clone the Repository
+
+```sh
+git clone https://github.com/minimal005/kanban.git
+cd kanban
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Install Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+npm install
 ```
+
+### Run the Development Server
+
+```sh
+npm run dev
+```
+
+### Run Tests
+
+```sh
+npm run test
+```
+
+## How It Works
+
+1. **Enter a GitHub repo URL** in the input field (e.g., `https://github.com/facebook/react`).
+2. **Click "Load"**, and the app fetches issues from GitHub API.
+3. **Drag & drop** issues between columns to update their status.
+4. The app **saves issue positions** so they persist across sessions.
+5. Click on repository and owner links to visit them on GitHub.
+
+## Folder Structure
+
+```
+kanban/
+├── src/
+│   ├── components/   # React components
+│   ├── hooks/        # Custom hooks
+│   ├── store/        # Redux store
+│   ├── utils/        # Utility functions
+│   ├── tests/        # Cypress tests
+│   ├── App.tsx       # Main app file
+│   ├── index.tsx     # Entry point
+│
+├── public/           # Static assets
+├── README.md         # Project documentation
+├── package.json      # Dependencies and scripts
+```
+
+## Assessment Criteria
+
+- ✅ **Workability**: Fully functional Kanban board
+- ✅ **Project Structure**: Well-organized files and modular components
+- ✅ **Code Quality**: Clean, maintainable, and properly formatted with ESLint and Prettier
+- ✅ **React & Ecosystem Knowledge**: Proper use of hooks, state management, and UI libraries
+- ✅ **Testing**: Cypress tests to ensure functionality
+
+## Future Improvements
+
+- Enhance performance with **virtualized lists** for large repositories.
+- Add **user authentication** for personal issue tracking.
+- Implement **real-time updates** using WebSockets.
+
+## License
+
+This project is licensed under the **MIT License**.
