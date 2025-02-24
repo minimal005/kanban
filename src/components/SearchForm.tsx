@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { useGithubStore } from "@/app/useGithubStore";
 import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
+
 type Inputs = {
   searchField: string;
 };
@@ -60,7 +61,7 @@ export const SearchForm = () => {
           borderRadius="md"
           borderStyle="solid"
           borderWidth="1px"
-          borderColor="#ffffff11"
+          borderColor="var(--bg-column)"
           transition="border-color 0.3s linear"
           _hover={{
             borderColor: "blue.600",
@@ -99,22 +100,25 @@ export const SearchForm = () => {
               boxShadow: "none",
             }}
             transition="color 0.3s linear, border-left-color 0.3s linear"
-            _hover={{ color: "#b49135", borderLeftColor: "blue.500" }}
+            _hover={{
+              color: "var(--yellow-color)",
+              borderLeftColor: "blue.500",
+            }}
           >
             ✖
           </Button>
         </Flex>
         <Button
           type="submit"
-          bgColor="#3f3f4694"
+          bgColor="var(--bg-card)"
           h="100%"
           color="gray.400"
           borderStyle="solid"
           borderWidth="1px"
-          borderColor="#ffffff11"
+          borderColor="var(--bg-column)"
           borderRadius="md"
           transition="border-color 0.3s linear, color 0.3s linear"
-          _hover={{ borderColor: "blue.600", color: "#b49135" }}
+          _hover={{ borderColor: "blue.600", color: "var(--yellow-color)" }}
         >
           Load Issues
         </Button>

@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
+import { DragDropProvider } from "@dnd-kit/react";
 import { Grid } from "@chakra-ui/react";
 import { Column } from "./Column";
-import { DragDropProvider } from "@dnd-kit/react";
 import { move } from "@dnd-kit/helpers";
 import { useGithubStore } from "../app/useGithubStore";
-import { useEffect, useState } from "react";
 import { IssuesGrouped } from "@/utils/types/Issue";
 
 export const TodoList = () => {

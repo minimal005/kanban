@@ -1,5 +1,5 @@
-import { Box } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
+import { Box } from "@chakra-ui/react";
 
 type Props = {
   children: ReactNode;
@@ -14,7 +14,7 @@ export const Container: React.FC<Props> = ({ children }) => {
       borderRadius="md"
       borderStyle="solid"
       borderWidth="1px"
-      borderColor="#ffffff11"
+      borderColor="var(--bg-column)"
     >
       {children}
     </Box>

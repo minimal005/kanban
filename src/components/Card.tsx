@@ -1,8 +1,8 @@
-import { Issue } from "@/utils/types/Issue";
+import React from "react";
 import { Box, Link, Text } from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/react/sortable";
 import { format } from "date-fns";
-import React from "react";
+import { Issue } from "@/utils/types/Issue";
 
 type Props = {
   id: number;
@@ -26,7 +26,7 @@ export const Card: React.FC<Props> = (props) => {
       as="article"
       ref={ref}
       data-dragging={isDragging}
-      bg="#3f3f4694"
+      bg="var(--bg-card)"
       p={4}
       mb={2}
       w={"100%"}
@@ -41,7 +41,7 @@ export const Card: React.FC<Props> = (props) => {
         borderColor: "blue.600",
       }}
     >
-      <Text fontWeight="bold" color="#b49135">
+      <Text fontWeight="bold" color="var(--yellow-color)">
         {issue.title}
       </Text>
       <Text fontSize="sm" color="gray.300">

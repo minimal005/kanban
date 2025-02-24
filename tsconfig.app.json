@@ -16,6 +16,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["cypress", "node"],
 
     /* Linting */
     "strict": true,
@@ -24,5 +25,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "theme.ts"]
+  "include": ["src", "theme.ts", "cypress"]
 }

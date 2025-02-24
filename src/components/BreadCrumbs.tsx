@@ -1,5 +1,5 @@
-import { useGithubStore } from "@/app/useGithubStore";
 import { Breadcrumb } from "@chakra-ui/react";
+import { useGithubStore } from "@/app/useGithubStore";
 
 export const BreadCrumbs = () => {
   const { path } = useGithubStore();
