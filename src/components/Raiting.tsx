@@ -1,7 +1,7 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { useAppSelector } from "@/app/hooks";
 import { BreadCrumbs } from "./BreadCrumbs";
 import { formatStars } from "@/utils/helpers/formatStars";
-import { useAppSelector } from "@/app/hooks";
+import { Box, Flex } from "@chakra-ui/react";
 
 export const Raiting = () => {
   const stars = useAppSelector((state) => state.issues.stars);

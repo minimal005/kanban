@@ -14,6 +14,7 @@ export const TodoList = () => {
     inProgress: state.issues.inProgress,
     done: state.issues.done,
   }));
+
   const dispatch = useAppDispatch();
 
   const memoizedIssues = useMemo(
@@ -49,7 +50,7 @@ export const TodoList = () => {
       <Grid
         as="section"
         templateColumns={{
-          sm: "1fr",
+          base: "1fr",
           md: "repeat(3, minmax(250px, 1fr))",
         }}
         justifyContent={"center"}

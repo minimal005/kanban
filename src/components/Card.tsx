@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Link, Text } from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/react/sortable";
-// import { format } from "date-fns";
+import { format } from "date-fns";
 import { Issue } from "@/types/Issue";
+import { GITHUB_URL } from "@/utils/constants";
 
 type Props = {
   id: number;
@@ -12,6 +13,7 @@ type Props = {
 };
 export const Card: React.FC<Props> = (props) => {
   const { id, index, issue, column } = props;
+  console.log(issue);
   const { ref, isDragging } = useSortable({
     id,
     index,
@@ -44,11 +46,14 @@ export const Card: React.FC<Props> = (props) => {
         {issue.title}
       </Text>
       <Text fontSize="sm" color="gray.300">
-        {/* #{issue.id} {column} {format(new Date(issue.date), "MMM dd yyyy")} */}
+        #{issue.id} {column}{" "}
+        {issue.created_at
+          ? format(new Date(issue.created_at), "MMM dd yyyy")
+          : ""}
       </Text>
       <Text fontSize="sm" color="gray.300">
         <Link
-          href={`http://github.com/${issue.author}`}
+          href={`${GITHUB_URL}${issue.user?.login}`}
           target="_blank"
           _focus={{
             outline: "none",
@@ -56,7 +61,7 @@ export const Card: React.FC<Props> = (props) => {
           }}
         >
           {" "}
-          {issue.author}
+          {issue.user?.login}
         </Link>{" "}
         |{" "}
         <Text color="gray.400" as={"span"}>

@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
-import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import { SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
 import {
   fetchIssues,
   fetchRepoDetails,
   setIssues,
   setPath,
 } from "@/features/issuesSlice";
+import { GITHUB_URL } from "@/utils/constants";
 
 type Inputs = {
   searchField: string;
 };
 
-const githubURL = "https://github.com/";
-
 export const SearchForm = () => {
   const dispatch = useAppDispatch();
-  const { path, open, inProgress, done } = useAppSelector(
-    (state) => state.issues
-  );
-  console.log(path);
+  const { path } = useAppSelector((state) => state.issues);
+
   const [repo, setRepo] = useState(path);
 
   const isFullWidth = useBreakpointValue({ base: true, md: false }) ?? true;
@@ -32,28 +28,23 @@ export const SearchForm = () => {
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      searchField: repo ? `${githubURL}${repo}` : githubURL,
+      searchField: repo ? `${GITHUB_URL}${repo}` : GITHUB_URL,
     },
   });
-  const partPath = repo.replace("https://github.com/", "");
-
-  useEffect(() => {
-    if (!!open.length || !!inProgress.length || !!done.length) {
-      dispatch(setPath(partPath));
-    }
-  }, [open, inProgress, done, dispatch]);
+  const partPath = repo.replace(GITHUB_URL, "");
 
   const handleClickRepo: SubmitHandler<Inputs> = () => {
     if (repo) {
       dispatch(fetchIssues(partPath));
       dispatch(fetchRepoDetails(partPath));
+      dispatch(setPath(partPath));
     }
   };
 
   const handleReset = () => {
     dispatch(setIssues({ open: [], inProgress: [], done: [] }));
     dispatch(setPath(""));
-    reset({ searchField: githubURL });
+    reset({ searchField: GITHUB_URL });
   };
 
   return (
@@ -87,11 +78,15 @@ export const SearchForm = () => {
             {...register("searchField", {
               required: "This field is required",
               validate: (value) =>
-                value.startsWith(githubURL) ||
-                `Enter a valid GitHub URL, e.g. https://github.com/facebook/react`,
+                value.startsWith(GITHUB_URL) ||
+                `Enter a valid GitHub URL, e.g. ${GITHUB_URL}facebook/react`,
             })}
             onChange={(e) => setRepo(e.target.value)}
             className="searchField"
+            _selection={{
+              backgroundColor: "var(--bg-column)",
+              color: "blue.400",
+            }}
           />
           <Button
             type="button"

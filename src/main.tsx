@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { App } from "./App.tsx";
+import { persistor, store } from "./app/store.ts";
 import { Provider } from "./components/ui/provider.tsx";
 import { Provider as ReduxProvider } from "react-redux";
-
 import { PersistGate } from "redux-persist/integration/react";
-import "./index.css";
+import { App } from "./App.tsx";
 import { ThemeProvider } from "next-themes";
-import { persistor, store } from "./app/store.ts";
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

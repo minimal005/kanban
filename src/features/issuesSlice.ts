@@ -1,8 +1,7 @@
-import { Issue, IssuesGrouped } from "@/types/Issue";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const GITHUB_API_URL = "https://api.github.com/repos/";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { GITHUB_API_URL } from "@/utils/constants";
+import { Issue, IssuesGrouped } from "@/types/Issue";
 
 export const fetchIssues = createAsyncThunk(
   "issues/fetchIssues",
@@ -88,6 +87,9 @@ const issuesSlice = createSlice({
         state.status = "failed";
         state.error =
           typeof action.payload === "string" ? action.payload : "Unknown error";
+        state.open = [];
+        state.inProgress = [];
+        state.done = [];
       })
       .addCase(fetchRepoDetails.fulfilled, (state, action) => {
         state.stars = action.payload.stargazers_count;
