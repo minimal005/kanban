@@ -5,7 +5,7 @@ import { Column } from "./Column";
 import { move } from "@dnd-kit/helpers";
 import { IssuesGrouped } from "@/types/Issue";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { InitialState, moveIssue } from "@/features/issuesSlice";
+import { InitialState, setIssues } from "@/features/issuesSlice";
 import { Card } from "./Card";
 
 export const TodoList = () => {
@@ -38,22 +38,12 @@ export const TodoList = () => {
   return (
     <DragDropProvider
       onDragOver={(event) => {
-        const { operation } = event;
-        if (!operation?.source || !operation?.target) {
-          return;
-        }
-
-        const issueId = Number(operation.source.id);
-        const from = operation.source.data.current?.column || null;
-        const to = operation.target.data.current?.column || null;
-        console.log(operation.source.data);
-        // console.log(from, to);
-
-        if (from && to && from !== to) {
-          dispatch(moveIssue({ issueId, from, to }));
-        }
-
-        setItems((items) => move(items, event));
+        setItems((items) => {
+          return move(items, event);
+        });
+      }}
+      onDragEnd={() => {
+        dispatch(setIssues(items));
       }}
     >
       <Grid

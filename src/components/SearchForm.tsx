@@ -1,42 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "@/app/hooks";
-import { fetchIssues } from "@/features/issuesSlice";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import {
+  fetchIssues,
+  fetchRepoDetails,
+  setIssues,
+  setPath,
+} from "@/features/issuesSlice";
 
 type Inputs = {
   searchField: string;
 };
 
 const githubURL = "https://github.com/";
+
 export const SearchForm = () => {
   const dispatch = useAppDispatch();
-  const [repo, setRepo] = useState("");
+  const { path, open, inProgress, done } = useAppSelector(
+    (state) => state.issues
+  );
+  console.log(path);
+  const [repo, setRepo] = useState(path);
 
   const isFullWidth = useBreakpointValue({ base: true, md: false }) ?? true;
   const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
       searchField: repo ? `${githubURL}${repo}` : githubURL,
     },
   });
+  const partPath = repo.replace("https://github.com/", "");
+
+  useEffect(() => {
+    if (!!open.length || !!inProgress.length || !!done.length) {
+      dispatch(setPath(partPath));
+    }
+  }, [open, inProgress, done, dispatch]);
 
   const handleClickRepo: SubmitHandler<Inputs> = () => {
     if (repo) {
-      dispatch(fetchIssues(repo.replace("https://github.com/", "")));
+      dispatch(fetchIssues(partPath));
+      dispatch(fetchRepoDetails(partPath));
     }
   };
 
-  // const handleReset = () => {
-  //   // fetchIssues('');
-  //   useGithubStore.setState({ path: "" });
-  //   reset({ searchField: githubURL });
-  // };
+  const handleReset = () => {
+    dispatch(setIssues({ open: [], inProgress: [], done: [] }));
+    dispatch(setPath(""));
+    reset({ searchField: githubURL });
+  };
 
   return (
     <Box as="section" mb={4}>
@@ -78,7 +96,7 @@ export const SearchForm = () => {
           <Button
             type="button"
             w="42px"
-            // onClick={reset}
+            onClick={handleReset}
             alignItems="center"
             display="flex"
             boxSizing="border-box"

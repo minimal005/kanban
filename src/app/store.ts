@@ -6,7 +6,7 @@ import issuesSlice from "../features/issuesSlice";
 const persistConfig = {
   key: "issues",
   storage,
-  whitelist: ["open", "inProgress", "done"],
+  whitelist: ["open", "inProgress", "done", "path", "stars"],
 };
 
 const persistedIssuesReducer = persistReducer(

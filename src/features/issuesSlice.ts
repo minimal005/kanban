@@ -18,9 +18,29 @@ export const fetchIssues = createAsyncThunk(
     }
   }
 );
+
+export const fetchRepoDetails = createAsyncThunk(
+  "issues/fetchRepoDetails",
+  async (repo: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${GITHUB_API_URL}${repo}`);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(
+          error.response?.data || "Error fetching repo details"
+        );
+      }
+      return rejectWithValue("Unknown error occurred");
+    }
+  }
+);
+
 export interface InitialState extends IssuesGrouped {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  stars: number;
+  path: string;
 }
 
 const initialState: InitialState = {
@@ -29,32 +49,21 @@ const initialState: InitialState = {
   done: [],
   status: "idle",
   error: null,
+  stars: 0,
+  path: "",
 };
 
 const issuesSlice = createSlice({
   name: "issues",
   initialState,
   reducers: {
-    moveIssue: (
-      state,
-      action: PayloadAction<{
-        issueId: number;
-        from: keyof typeof state;
-        to: keyof typeof state;
-      }>
-    ) => {
-      const { issueId, from, to } = action.payload;
-
-      if (!Array.isArray(state[from]) || !Array.isArray(state[to])) {
-        return;
-      }
-
-      const issueIndex = state[from].findIndex((issue) => issue.id === issueId);
-      if (issueIndex !== -1) {
-        const [movedIssue] = state[from].splice(issueIndex, 1);
-        state[to].push(movedIssue);
-      }
-      console.log(state[from], state[to]);
+    setIssues: (state, action: PayloadAction<IssuesGrouped>) => {
+      state.open = action.payload.open;
+      state.inProgress = action.payload.inProgress;
+      state.done = action.payload.done;
+    },
+    setPath: (state, action: PayloadAction<string>) => {
+      state.path = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -79,9 +88,12 @@ const issuesSlice = createSlice({
         state.status = "failed";
         state.error =
           typeof action.payload === "string" ? action.payload : "Unknown error";
+      })
+      .addCase(fetchRepoDetails.fulfilled, (state, action) => {
+        state.stars = action.payload.stargazers_count;
       });
   },
 });
 
-export const { moveIssue } = issuesSlice.actions;
+export const { setIssues, setPath } = issuesSlice.actions;
 export default issuesSlice;

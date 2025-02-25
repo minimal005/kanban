@@ -1,10 +1,12 @@
+import { useAppSelector } from "@/app/hooks";
 import { Breadcrumb } from "@chakra-ui/react";
-import { useGithubStore } from "@/app/useGithubStore";
-
 export const BreadCrumbs = () => {
-  const { path } = useGithubStore();
+  const path = useAppSelector((state) => state.issues.path);
+
   const parentPath = path.split("/")[0]?.toLowerCase() || null;
   const childPath = path.split("/")[1]?.toLowerCase() || null;
+
+  console.log(path);
 
   return (
     <Breadcrumb.Root size="md" ml="5px">
