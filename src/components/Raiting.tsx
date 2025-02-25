@@ -1,18 +1,17 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { BreadCrumbs } from "./BreadCrumbs";
-import { useGithubStore } from "@/app/useGithubStore";
-import { formatStars } from "@/utils/helpers/formatStars";
+// import { formatStars } from "@/utils/helpers/formatStars";
 
 export const Raiting = () => {
-  const { path, stars, fetchRepoDetails } = useGithubStore();
-  useEffect(() => {
-    if (path) {
-      fetchRepoDetails(path);
-    }
-  }, [path, fetchRepoDetails]);
+  // const { path, stars, fetchRepoDetails } = useGithubStore();
+  // useEffect(() => {
+  //   if (path) {
+  //     fetchRepoDetails(path);
+  //   }
+  // }, [path, fetchRepoDetails]);
 
-  const formattedStars = formatStars(stars);
+  // const formattedStars = formatStars(stars);
 
   return (
     <Flex as="section" mb={10} align="center" gap="15px">
@@ -22,7 +21,7 @@ export const Raiting = () => {
           <Box as="span" color="var(--yellow-color)">
             ★
           </Box>{" "}
-          {formattedStars} stars
+          {/* {formattedStars} stars */}
         </Box>
       </Flex>
     </Flex>

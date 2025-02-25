@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useGithubStore } from "@/app/useGithubStore";
 import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
@@ -19,7 +18,7 @@ export const SearchForm = () => {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -33,11 +32,11 @@ export const SearchForm = () => {
     }
   };
 
-  const handleReset = () => {
-    // fetchIssues('');
-    useGithubStore.setState({ path: "" });
-    reset({ searchField: githubURL });
-  };
+  // const handleReset = () => {
+  //   // fetchIssues('');
+  //   useGithubStore.setState({ path: "" });
+  //   reset({ searchField: githubURL });
+  // };
 
   return (
     <Box as="section" mb={4}>
@@ -77,9 +76,9 @@ export const SearchForm = () => {
             className="searchField"
           />
           <Button
-            onClick={handleReset}
             type="button"
             w="42px"
+            // onClick={reset}
             alignItems="center"
             display="flex"
             boxSizing="border-box"

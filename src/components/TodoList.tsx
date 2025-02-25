@@ -46,10 +46,13 @@ export const TodoList = () => {
         const issueId = Number(operation.source.id);
         const from = operation.source.data.current?.column || null;
         const to = operation.target.data.current?.column || null;
+        console.log(operation.source.data);
+        // console.log(from, to);
 
         if (from && to && from !== to) {
           dispatch(moveIssue({ issueId, from, to }));
         }
+
         setItems((items) => move(items, event));
       }}
     >
