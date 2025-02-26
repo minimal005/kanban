@@ -102,6 +102,7 @@ export const SearchForm = () => {
                 `Enter a valid GitHub URL, e.g. ${GITHUB_URL}facebook/react`,
             })}
             onChange={(e) => setRepo(e.target.value)}
+            color={{ base: "gray.700", _dark: "gray.400" }}
             className="searchField"
             _selection={{
               backgroundColor: "var(--bg-column)",
