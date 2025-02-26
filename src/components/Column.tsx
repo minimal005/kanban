@@ -28,7 +28,7 @@ export const Column: React.FC<Props> = ({ children, id }) => {
       p={4}
       w="full"
       mx="auto"
-      bgColor={{ base: "gray.100", _dark: "gray.800" }}
+      bgColor={{ base: "gray.200", _dark: "gray.800" }}
       borderRadius="md"
       borderStyle="solid"
       borderWidth="1px"

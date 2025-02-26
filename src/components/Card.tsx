@@ -31,9 +31,9 @@ export const Card: React.FC<Props> = (props) => {
       mb={2}
       w={"100%"}
       borderRadius="md"
-      shadow={{ base: "md", _dark: "xs" }}
+      shadow={{ base: "lg", _dark: "xs" }}
       cursor="pointer"
-      borderColor="transparent"
+      borderColor={{ base: "grey.500", _dark: "transparent" }}
       borderStyle="solid"
       borderWidth="1px"
       transition="border-color 0.3s linear"
