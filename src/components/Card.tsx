@@ -13,7 +13,6 @@ type Props = {
 };
 export const Card: React.FC<Props> = (props) => {
   const { id, index, issue, column } = props;
-  console.log(issue);
   const { ref, isDragging } = useSortable({
     id,
     index,
@@ -54,10 +53,15 @@ export const Card: React.FC<Props> = (props) => {
       <Text fontSize="sm" color="gray.300">
         <Link
           href={`${GITHUB_URL}${issue.user?.login}`}
+          color="blue.500"
           target="_blank"
+          transition="color 0.2s linear"
           _focus={{
             outline: "none",
             boxShadow: "none",
+          }}
+          _hover={{
+            color: "var(--yellow-color)",
           }}
         >
           {" "}

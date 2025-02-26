@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Box, Button, Flex, Input, useBreakpointValue } from "@chakra-ui/react";
+import { toaster, Toaster } from "@/components/ui/toaster";
 import {
   fetchIssues,
   fetchRepoDetails,
@@ -33,11 +34,25 @@ export const SearchForm = () => {
   });
   const partPath = repo.replace(GITHUB_URL, "");
 
-  const handleClickRepo: SubmitHandler<Inputs> = () => {
+  const handleClickRepo: SubmitHandler<Inputs> = async () => {
     if (repo) {
-      dispatch(fetchIssues(partPath));
-      dispatch(fetchRepoDetails(partPath));
-      dispatch(setPath(partPath));
+      try {
+        await dispatch(fetchIssues(partPath)).unwrap();
+        await dispatch(fetchRepoDetails(partPath)).unwrap();
+        dispatch(setPath(partPath));
+
+        toaster.create({
+          title: "Success!",
+          description: "Issues successfully loaded",
+          type: "success",
+        });
+      } catch {
+        toaster.create({
+          title: "Error",
+          description: "Failed to load issues. Please try again.",
+          type: "error",
+        });
+      }
     }
   };
 
@@ -45,6 +60,12 @@ export const SearchForm = () => {
     dispatch(setIssues({ open: [], inProgress: [], done: [] }));
     dispatch(setPath(""));
     reset({ searchField: GITHUB_URL });
+
+    toaster.create({
+      title: "Reset",
+      description: "Issues list has been cleared",
+      type: "info",
+    });
   };
 
   return (
@@ -142,6 +163,7 @@ export const SearchForm = () => {
           {errors.searchField.message}
         </Box>
       )}
+      <Toaster />
     </Box>
   );
 };
