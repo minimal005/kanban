@@ -150,6 +150,7 @@ export const SearchForm = () => {
           borderRadius="md"
           transition="border-color 0.3s linear, color 0.3s linear"
           _hover={{ borderColor: "blue.600", color: "var(--yellow-color)" }}
+          _active={{ borderColor: "blue.600", color: "var(--yellow-color)" }}
         >
           Load Issues
         </Button>
