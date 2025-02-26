@@ -86,11 +86,9 @@ export const SearchForm = () => {
           borderRadius="md"
           borderStyle="solid"
           borderWidth="1px"
-          borderColor="var(--bg-column)"
-          transition="border-color 0.3s linear"
-          _hover={{
-            borderColor: "blue.600",
-          }}
+          borderColor={{ base: "gray.400", _dark: "var(--bg-column)" }}
+          transition="border-color 0.3s linear, color 0.3s linear"
+          _hover={{ borderColor: "blue.600", color: "var(--yellow-color)" }}
           _focus={{
             borderColor: "blue.600",
             transition: "color 0.3s ease-in-out",
@@ -112,7 +110,7 @@ export const SearchForm = () => {
           />
           <Button
             type="button"
-            w="42px"
+            w="40px"
             onClick={handleReset}
             alignItems="center"
             display="flex"
@@ -123,7 +121,7 @@ export const SearchForm = () => {
             color={{ base: "gray.700", _dark: "gray.400" }}
             borderLeftRadius="none"
             background="transparent"
-            borderLeftColor={{ base: "gray.300", _dark: "gray.700" }}
+            borderLeftColor={{ base: "gray.400", _dark: "gray.700" }}
             cursor="pointer"
             _focus={{
               outline: "none",
@@ -141,7 +139,7 @@ export const SearchForm = () => {
         <Button
           type="submit"
           bgColor={{ base: "gray.100", _dark: "var(--bg-card)" }}
-          h="43px"
+          h="42px"
           color={{ base: "gray.700", _dark: "gray.400" }}
           borderStyle="solid"
           borderWidth="1px"
