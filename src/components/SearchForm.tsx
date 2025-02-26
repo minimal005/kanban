@@ -35,6 +35,7 @@ export const SearchForm = () => {
   const partPath = repo.replace(GITHUB_URL, "");
 
   const handleClickRepo: SubmitHandler<Inputs> = async () => {
+    console.log(repo);
     if (repo) {
       try {
         await dispatch(fetchIssues(partPath)).unwrap();
@@ -60,6 +61,7 @@ export const SearchForm = () => {
     dispatch(setIssues({ open: [], inProgress: [], done: [] }));
     dispatch(setPath(""));
     reset({ searchField: GITHUB_URL });
+    setRepo("");
 
     toaster.create({
       title: "Reset",
