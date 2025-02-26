@@ -12,11 +12,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Provider>
-          <ThemeProvider attribute="class" disableTransitionOnChange>
+        <ThemeProvider attribute="class" disableTransitionOnChange>
+          <Provider>
             <App />
-          </ThemeProvider>
-        </Provider>
+          </Provider>
+        </ThemeProvider>
       </PersistGate>
     </ReduxProvider>
   </React.StrictMode>

@@ -28,7 +28,7 @@ export const Column: React.FC<Props> = ({ children, id }) => {
       p={4}
       w="full"
       mx="auto"
-      bg="gray.800"
+      bgColor={{ base: "gray.100", _dark: "gray.800" }}
       borderRadius="md"
       borderStyle="solid"
       borderWidth="1px"
@@ -41,7 +41,7 @@ export const Column: React.FC<Props> = ({ children, id }) => {
         fontWeight="bold"
         align="center"
         justify="center"
-        color="blue.500"
+        color={{ base: "gray.700", _dark: "blue.500" }}
         mb={3}
       >
         {statusStyle === "InProgress" ? "In Progress" : statusStyle}

@@ -35,7 +35,6 @@ export const SearchForm = () => {
   const partPath = repo.replace(GITHUB_URL, "");
 
   const handleClickRepo: SubmitHandler<Inputs> = async () => {
-    console.log(repo);
     if (repo) {
       try {
         await dispatch(fetchIssues(partPath)).unwrap();
@@ -80,7 +79,7 @@ export const SearchForm = () => {
         rowGap={4}
       >
         <Flex
-          bg="gray.800"
+          bg={{ base: "gray.100", _dark: "gray.800" }}
           w="full"
           h="100%"
           alignItems="center"
@@ -121,10 +120,10 @@ export const SearchForm = () => {
             borderStyle="solid"
             borderWidth="1px"
             borderColor="transparent"
-            color="white"
+            color={{ base: "gray.700", _dark: "gray.400" }}
             borderLeftRadius="none"
             background="transparent"
-            borderLeftColor="gray.700"
+            borderLeftColor={{ base: "gray.300", _dark: "gray.700" }}
             cursor="pointer"
             _focus={{
               outline: "none",
@@ -141,12 +140,12 @@ export const SearchForm = () => {
         </Flex>
         <Button
           type="submit"
-          bgColor="var(--bg-card)"
-          h="100%"
-          color="gray.400"
+          bgColor={{ base: "gray.100", _dark: "var(--bg-card)" }}
+          h="43px"
+          color={{ base: "gray.700", _dark: "gray.400" }}
           borderStyle="solid"
           borderWidth="1px"
-          borderColor="var(--bg-column)"
+          borderColor={{ base: "gray.400", _dark: "var(--bg-column)" }}
           borderRadius="md"
           transition="border-color 0.3s linear, color 0.3s linear"
           _hover={{ borderColor: "blue.600", color: "var(--yellow-color)" }}

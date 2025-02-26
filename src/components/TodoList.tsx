@@ -5,16 +5,17 @@ import { Column } from "./Column";
 import { move } from "@dnd-kit/helpers";
 import { IssuesGrouped } from "@/types/Issue";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { InitialState, setIssues } from "@/features/issuesSlice";
+import { setIssues } from "@/features/issuesSlice";
 import { Card } from "./Card";
+import { Status } from "@/types/StatusEnum";
 
 export const TodoList = () => {
-  const issues = useAppSelector((state: { issues: InitialState }) => ({
+  const issues = useAppSelector((state) => ({
     open: state.issues.open,
     inProgress: state.issues.inProgress,
     done: state.issues.done,
   }));
-
+  const status = useAppSelector((state) => state.issues.status);
   const dispatch = useAppDispatch();
 
   const memoizedIssues = useMemo(
@@ -32,7 +33,7 @@ export const TodoList = () => {
     setItems(memoizedIssues);
   }, [memoizedIssues]);
 
-  if (status === "loading") {
+  if (status === Status.Loading) {
     return <p>Loading...</p>;
   }
 

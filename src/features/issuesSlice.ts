@@ -2,6 +2,7 @@ import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GITHUB_API_URL } from "@/utils/constants";
 import { Issue, IssuesGrouped } from "@/types/Issue";
+import { Status } from "@/types/StatusEnum";
 
 export const fetchIssues = createAsyncThunk(
   "issues/fetchIssues",
@@ -36,7 +37,7 @@ export const fetchRepoDetails = createAsyncThunk(
 );
 
 export interface InitialState extends IssuesGrouped {
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: Status;
   error: string | null;
   stars: number;
   path: string;
@@ -46,7 +47,7 @@ const initialState: InitialState = {
   open: [],
   inProgress: [],
   done: [],
-  status: "idle",
+  status: Status.Idle,
   error: null,
   stars: 0,
   path: "",
@@ -68,11 +69,11 @@ const issuesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchIssues.pending, (state) => {
-        state.status = "loading";
+        state.status = Status.Loading;
         state.error = null;
       })
       .addCase(fetchIssues.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = Status.Succeeded;
         state.open = action.payload.filter(
           (issue: Issue) => !issue.assignee && issue.state === "open"
         );
@@ -84,7 +85,7 @@ const issuesSlice = createSlice({
         );
       })
       .addCase(fetchIssues.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = Status.Failed;
         state.error =
           typeof action.payload === "string" ? action.payload : "Unknown error";
         state.open = [];

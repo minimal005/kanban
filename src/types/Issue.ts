@@ -3,7 +3,9 @@ export interface Issue {
   title: string;
   html_url: string;
   state: string;
-  user: { login: string };
+  user: {
+    login: string;
+  };
 
   created_at: string;
   comments: number;
