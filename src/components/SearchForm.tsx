@@ -29,7 +29,7 @@ export const SearchForm = () => {
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      searchField: repo ? `${GITHUB_URL}${repo}` : GITHUB_URL,
+      searchField: repo && `${GITHUB_URL}${repo}`,
     },
   });
   const partPath = repo.replace(GITHUB_URL, "");
@@ -49,7 +49,7 @@ export const SearchForm = () => {
       } catch {
         toaster.create({
           title: "Error",
-          description: "Failed to load issues. Please try again.",
+          description: `Failed to load issues. Please enter a GitHub URL, e.g. ${GITHUB_URL}facebook/react.`,
           type: "error",
         });
       }
@@ -59,7 +59,7 @@ export const SearchForm = () => {
   const handleReset = () => {
     dispatch(setIssues({ open: [], inProgress: [], done: [] }));
     dispatch(setPath(""));
-    reset({ searchField: GITHUB_URL });
+    reset({ searchField: "" });
     setRepo("");
 
     toaster.create({
@@ -96,7 +96,7 @@ export const SearchForm = () => {
         >
           <Input
             {...register("searchField", {
-              required: "This field is required",
+              required: `This field is required. Enter a GitHub URL, e.g. ${GITHUB_URL}facebook/react`,
               validate: (value) =>
                 value.startsWith(GITHUB_URL) ||
                 `Enter a valid GitHub URL, e.g. ${GITHUB_URL}facebook/react`,
